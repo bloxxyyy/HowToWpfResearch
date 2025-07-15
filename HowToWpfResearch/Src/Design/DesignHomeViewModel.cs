@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace HowToWpfResearch.Src.Design;
 
-public partial class DesignMainViewModel : ObservableObject {
+public partial class DesignHomeViewModel : ObservableObject {
     [ObservableProperty]
     private string greeting = "Hello from Design Mode!";
 
