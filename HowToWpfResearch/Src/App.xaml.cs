@@ -1,40 +1,44 @@
 ﻿using System.Windows;
 
+using HowToWpfResearch.Src.Services;
 using HowToWpfResearch.Src.ViewModels;
 using HowToWpfResearch.Src.Views;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HowToWpfResearch.Src {
-    public partial class App : Application {
+namespace HowToWpfResearch.Src;
 
-        public IServiceProvider Services { get; }
+public partial class App : Application {
 
-        public new static App Current => (App)Application.Current;
+    public IServiceProvider Services { get; }
 
-        public App() {
-            Services = ConfigureServices();
-        }
+    public new static App Current => (App)Application.Current;
 
-        private static IServiceProvider ConfigureServices() {
-            ServiceCollection services = new();
+    public App() {
+        Services = ConfigureServices();
+    }
 
-            // Register your viewmodels here
-            services.AddTransient<MainViewModel>();
+    private static ServiceProvider ConfigureServices() {
+        ServiceCollection services = new();
 
-            return services.BuildServiceProvider();
-        }
+        // Register services here
+        services.AddSingleton<IGreetingService, GreetingService>();
 
-        protected override void OnStartup(StartupEventArgs e) {
-            base.OnStartup(e);
+        // Register viewmodels here
+        services.AddTransient<MainViewModel>();
 
-            MainViewModel mainViewModel = Services.GetRequiredService<MainViewModel>();
+        return services.BuildServiceProvider();
+    }
 
-            MainView mainView = new() {
-                DataContext = mainViewModel
-            };
+    protected override void OnStartup(StartupEventArgs e) {
+        base.OnStartup(e);
 
-            mainView.Show();
-        }
+        MainViewModel mainViewModel = Services.GetRequiredService<MainViewModel>();
+
+        MainView mainView = new() {
+            DataContext = mainViewModel
+        };
+
+        mainView.Show();
     }
 }
