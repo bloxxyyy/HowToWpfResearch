@@ -1,15 +1,13 @@
 ﻿using System.Windows;
 
-namespace HowToWpfResearch.Src.Views
+using HowToWpfResearch.Src.ViewModels;
+
+namespace HowToWpfResearch.Src.Views;
+
+public partial class MainView : Window
 {
-    /// <summary>
-    /// Interaction logic for MainView.xaml
-    /// </summary>
-    public partial class MainView : Window
-    {
-        public MainView()
-        {
-            InitializeComponent();
-        }
+    public MainView(MainViewModel vm) {
+        InitializeComponent();
+        DataContext = vm;
     }
 }
