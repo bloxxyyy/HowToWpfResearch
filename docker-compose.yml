@@ -1,0 +1,19 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: HowToWpfResearch_Database
+    environment:
+      SA_PASSWORD: "${SA_PASSWORD}"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD", "pgrep", "sqlservr"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  sql_data:
